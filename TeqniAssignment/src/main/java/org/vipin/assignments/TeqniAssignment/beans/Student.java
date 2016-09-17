@@ -25,7 +25,6 @@ public class Student {
 	private Boolean isAssigned;
 	
 	@ManyToOne
-	@JoinColumn(name="member_of")
 	private Team memberOf;
 
 	public Integer getStudentId() {
@@ -48,7 +47,7 @@ public class Student {
 		return isAssigned;
 	}
 
-	public void setIsAvailable(Boolean isAvailable) {
+	public void setIsAssigned(Boolean isAvailable) {
 		this.isAssigned = isAvailable;
 	}
 

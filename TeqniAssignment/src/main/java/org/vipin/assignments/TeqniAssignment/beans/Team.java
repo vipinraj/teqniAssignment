@@ -7,26 +7,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="teams")
+@Table(name = "teams")
 public class Team {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="team_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "team_id")
 	private Integer teamId;
-	
-	@Column(name="team_name", nullable=false)
+
+	@Column(name = "team_name", nullable = false)
 	private String teamName;
-	
-	@Column(name="team_size")
+
+	@Column(name = "team_size")
 	private Integer maximumMembers;
-	
-	@OneToMany(mappedBy="memberOf", cascade = CascadeType.ALL)
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_team_mapping", joinColumns = @JoinColumn(name = "team_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private Collection<Student> members;
 
 	public Integer getTeamId() {
@@ -60,6 +62,5 @@ public class Team {
 	public void setMaximumMembers(Integer maximumMembers) {
 		this.maximumMembers = maximumMembers;
 	}
-	
-	
+
 }

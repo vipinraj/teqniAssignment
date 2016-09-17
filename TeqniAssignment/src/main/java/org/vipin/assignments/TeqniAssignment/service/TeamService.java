@@ -7,6 +7,5 @@ import org.vipin.assignments.TeqniAssignment.beans.Team;
 
 public interface TeamService {
 	List<Team> getAllTeams();
-	List<Student> getTeamMembers(Integer teamId);
 	void updateTeam(String teamDetails);
 }

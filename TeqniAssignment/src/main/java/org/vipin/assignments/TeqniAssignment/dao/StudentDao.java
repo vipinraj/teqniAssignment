@@ -6,4 +6,6 @@ import org.vipin.assignments.TeqniAssignment.beans.Student;
 
 public interface StudentDao {
 	List<Student> getUnAssignedStudents();
+	Student getByKey(Integer studentId);
+	void update(Student student);
 }

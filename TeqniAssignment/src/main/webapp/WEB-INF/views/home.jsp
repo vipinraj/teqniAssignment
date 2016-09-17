@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -505,9 +505,11 @@ img {
 			}
 		}
 
-		document.getElementById('saveContent').innerHTML = '<h1>Ready to save these nodes:</h1> '
+		 document.forms['myForm'].listOfItems.value = saveString; 
+		 
+		/* document.getElementById('saveContent').innerHTML = '<h1>Ready to save these nodes:</h1> '
 				+ saveString.replace(/;/g, ';<br>')
-				+ '<p>Format: ID of ul |(pipe) ID of li;(semicolon)</p><p>You can put these values into a hidden form fields, post it to the server and explode the submitted value there</p>';
+				+ '<p>Format: ID of ul |(pipe) ID of li;(semicolon)</p><p>You can put these values into a hidden form fields, post it to the server and explode the submitted value there</p>'; */
 
 	}
 
@@ -570,66 +572,49 @@ img {
 </head>
 <body>
 	<div id="dhtmlgoodies_dragDropContainer">
-		<div id="topBar">
-			<img src="/images/heading3.gif">
-		</div>
 		<div id="dhtmlgoodies_listOfItems">
 			<div>
 				<p>Available students</p>
-				
+
 				<ul id="allItems">
-					
+
 					<c:if test="${not empty unAssignedStudents }">
-						
+
 						<c:forEach items="${unAssignedStudents }" var="student">
 							<li id="${student.studentId}">${student.studentName }</li>
 						</c:forEach>
-						
+
 					</c:if>
 				</ul>
 			</div>
 		</div>
 		<div id="dhtmlgoodies_mainContainer">
 			<!-- ONE <UL> for each "room" -->
-			<div>
-				<p>Team a</p>
-				<ul id="box1">
-					<li id="node16">Student P</li>
-				</ul>
-			</div>
-			<div>
-				<p>Team B</p>
-				<ul id="box2"></ul>
-			</div>
-			<div>
-				<p>Team C</p>
-				<ul id="box3">
-					<li id="node17">Student Q</li>
-					<li id="node18">Student R</li>
-				</ul>
-			</div>
-			<div>
-				<p>Team D</p>
-				<ul id="box4"></ul>
-			</div>
-			<div>
-				<p>Team E</p>
-				<ul id="box5">
-					<li id="node19">Student S</li>
-					<li id="node20">Student T</li>
-					<li id="node21">Student U</li>
-				</ul>
-			</div>
+
+			<c:forEach items="${teams}" var="team">
+				<div>
+					<p>${team.teamName}</p>
+					<ul id="${team.teamId }">
+						<c:if test="${not empty team.members }">
+							<c:forEach items="${team.members}" var="student">
+								<li id="${student.studentId}">${student.studentName}</li>
+							</c:forEach>
+						</c:if>
+					</ul>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	<div id="footer">
-		<form action="aPage.html" method="post">
-			<input type="button" onclick="saveDragDropNodes()" value="Save">
+		<form name="myForm" action='<c:url value="/home"/>' method="post"
+			onsubmit="saveDragDropNodes()">
+			<input type="hidden" name="listOfItems" value=""> 
+			<input type="submit" value="Save" name="saveButton">
 		</form>
 	</div>
 	<ul id="dragContent"></ul>
 	<div id="dragDropIndicator">
-		<img src="images/insert.gif">
+		<img src="<c:url value='/static/images/insert.gif'/>">
 	</div>
 	<div id="saveContent">
 		<!-- THIS ID IS ONLY NEEDED FOR THE DEMO -->

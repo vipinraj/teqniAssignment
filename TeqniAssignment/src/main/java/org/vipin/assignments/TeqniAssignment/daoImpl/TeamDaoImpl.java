@@ -5,11 +5,9 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
-import org.vipin.assignments.TeqniAssignment.beans.Student;
 import org.vipin.assignments.TeqniAssignment.beans.Team;
 import org.vipin.assignments.TeqniAssignment.dao.AbstractDao;
 import org.vipin.assignments.TeqniAssignment.dao.TeamDao;
-
 
 @Repository("teamDao")
 public class TeamDaoImpl extends AbstractDao<Integer, Team> implements TeamDao {
@@ -17,20 +15,18 @@ public class TeamDaoImpl extends AbstractDao<Integer, Team> implements TeamDao {
 	@Override
 	public List<Team> getAllTeams() {
 		Criteria cr = createEntityCriteria();
-		cr.addOrder(Order.asc("teamName"));
-		return cr.list();
-	}
+		List<Team> teams = null;
 
-	@Override
-	public List<Student> getTeamMembers(Integer teamId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		try {
 
-	@Override
-	public void updateTeam(Team team) {
-		// TODO Auto-generated method stub
-		
+			cr.addOrder(Order.asc("teamName"));
+			teams = cr.list();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return teams;
 	}
 
 }

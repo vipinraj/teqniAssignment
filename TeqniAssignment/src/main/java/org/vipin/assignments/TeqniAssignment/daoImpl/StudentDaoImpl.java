@@ -16,9 +16,18 @@ public class StudentDaoImpl extends AbstractDao<Integer, Student> implements Stu
 	public List<Student> getUnAssignedStudents() {
 		
 		Criteria cr = createEntityCriteria();
-		cr.add(Restrictions.eq("isAssigned", false));
+		List<Student> students = null;
 		
-		return cr.list();
+		try {
+			
+			cr.add(Restrictions.eq("isAssigned", false));
+			students = cr.list();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return students;
 	}
 	
 }

@@ -7,6 +7,8 @@ import org.vipin.assignments.TeqniAssignment.beans.Team;
 
 public interface TeamDao {
 	List<Team> getAllTeams();
-	List<Student> getTeamMembers(Integer teamId);
-	void updateTeam(Team team);
+	void update(Team team);
+	void merge(Team team);
+	Team getByKey(Integer teamId);
+	
 }
